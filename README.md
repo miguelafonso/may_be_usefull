@@ -1,4 +1,4 @@
 may_be_usefull
 ==============
 
-Interesting code that may be usefull
+Revisit code, tips and multipurpose stuff
