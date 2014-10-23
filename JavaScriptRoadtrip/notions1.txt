@@ -1,0 +1,25 @@
+--- Function Expressions ---
+
+//declare anonymous
+var sum = function(a, b){
+	return a+b;
+};
+
+//use
+sum(2,3);
+
+
+--- Function Expressions w/Map ---
+Map -> applies function to each array index
+
+var hunch = [2,78,24,4]
+var halvedResults = hunch.map(function(arrayCell){return arrayCell/2});
+
+
+
+--- Array Functions ---
+
+var functionsArray = [
+    function(value) { return value*2; },
+    function(value) { return value%2; }
+]

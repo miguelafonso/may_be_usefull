@@ -1,0 +1,19 @@
+-- TypeOfs --
+boolean, string, number, undefined, object(ex:null),...
+
+
+-- Prompts and Confirms -- (just for information purposes)
+
+var name = prompt("What is your name?");
+
+if(typeof name == "string){
+
+} // the other way around would be to evaluate if the type of is not a string.
+  // An object is what would be returned if the user clicked on "cancel" in the prompt since it would return null, and null's typeof is object
+
+
+if(confirm ("Are you sure you want to save your name as: "+name)){ //since this returns a boolean value
+  // do stuff
+}
+
+
