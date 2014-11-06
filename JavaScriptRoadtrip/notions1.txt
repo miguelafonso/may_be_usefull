@@ -22,4 +22,14 @@ var halvedResults = hunch.map(function(arrayCell){return arrayCell/2});
 var functionsArray = [
     function(value) { return value*2; },
     function(value) { return value%2; }
-]
+];
+
+-- Array Methods --
+.push()
+.pop()
+.shift()-> pops first cell of the array and returns it
+.unshift()-> pushes first new elemento to the first position of array (returns length)
+.splice(x,y,z,k) -> from position x add z and k (y refers to how many elements should be removed)
+
+
+

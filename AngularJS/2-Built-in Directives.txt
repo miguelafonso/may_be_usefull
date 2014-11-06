@@ -1,0 +1,104 @@
+ng-Show/ng-Hide
+-shows/hide if the expressions value is true
+
+<button ngShow="store.product.canPurchase">Add to cart</button>
+
+ng-repeat
+-iterates through array
+JS:
+var gem = [{ name: 'Product', price: 1.89 }, { name: 'Azurite', price: 2.95 }];
+
+<div ng-repeat="product in store.products">
+...
+</div>
+
+ng-src
+-> used for the source of attributes. if the regular "scr" is used, the browser would try to load the image before the expression evaluated
+<img ng-src="{{product.images[0].full}}"/>
+
+
+-- Filters --
+
+Use as: {{data | filter:options}}
+The "pipe" means: take the result of the first expression and send the output into the second expression (which is thes case, is a filter)
+
+{{product.price | currency }}  // localized
+
+{{"1388123412323" | date:'dd/MM/yyyy @ h:mma'}} -> 27/12/2013 @ 12:50AM
+{{"testing" | uppercase}} -> TESTING
+{{"testing" | limitTo: 3}} -> tes    ( | limitTo can be used with ng-repeat to limit the number of products showed)
+<li ng-repeat="product in store.products | orderBy:'-price'"> //the "-" indicates descending order
+
+
+-- Tabs --
+
+JS
+
+  var app = angular.module('gemStore', []);
+
+  app.controller('StoreController', function(){
+    this.products = gems;
+  });
+
+  app.controller("TabController", function(){
+    this.tab = 1;
+    
+    this.setTab = function(newTab){
+    	this.tab = newTab;
+    };
+    
+    this.isSet = function(tab){
+    	return this.tab === tab;
+    };
+    
+  });
+
+HTML
+
+<section class="tab" ng-controller="TabController as tab">
+  <ul class="nav nav-pills">
+    <li ng-class="{active:tab.isSet(1)}">
+      <a href ng-click="tab.setTab(1)">Description</a>
+    </li>
+    <li ng-class="{active:tab.isSet(2)}">
+      <a href ng-click="tab.setTab(2)">Specs</a>
+    </li>
+    <li ng-class="{active:tab.isSet(3)}">
+      <a href ng-click="tab.setTab(3)">Reviews</a>
+    </li>
+  </ul>
+  <div ng-show="tab.isSet(1)">
+    <h4>Description</h4>
+    <blockquote>{{product.description}}</blockquote>
+  </div>
+
+  <div ng-show="tab.isSet(2)">
+    <h4>Specs</h4>
+    <blockquote>Shine: {{product.shine}}</blockquote>
+  </div>
+  <div ng-show="tab.isSet(3)">
+    <h4>Reviews</h4>
+    <blockquote>{{product.description}}</blockquote>
+  </div>
+</section>
+
+-- Same for Galley --
+
+JS
+  app.controller('GalleryController', function(){
+    this.current = 0;
+    this.setCurrent = function(newGallery){
+      this.current = newGallery || 0;
+    };
+  });
+
+HTML
+
+      <div class='gallery' ng-show="product.images.length" ng-controller="GalleryController as galery">
+        <img ng-src="{{product.images[galery.current]}}" />
+        <ul class="list-inline thumbs">
+          <li class="thumbnail" ng-repeat="image in product.images">
+            <img ng-src="{{image}}" />
+          </li>
+        </ul>
+      </div>

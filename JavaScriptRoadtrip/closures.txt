@@ -1,0 +1,17 @@
+--- Closures Concept ---
+
+function welcomeMessage(zone){
+	return function(name){
+		alert("Welcome "+name+"!. You are now headed of to: "+zone);
+	}
+}
+
+
+var getMountains = welcomeMessage("Mountains");
+
+var getOcean = welcomeMessage("Ocean");
+
+
+getMountains("Zé");
+getOcean("Maria");
+
