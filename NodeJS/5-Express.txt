@@ -1,1 +1,56 @@
 Routes, rendering, layouts, url building, express servers
+
+------------------------------------------------------------------
+Express -> sinatra inspired web dev framework from ror
+
+Installing:
+npm install --save express // --save install the module and ads it to the dependencies file
+
+Using:
+
+var express = require('express');
+
+var app = express();
+
+app.get('/', fucntion(resquest, response){
+	response.sendFile(__dirName+'/index.html');  //__dirName -> current dir
+});
+
+app.listen(8080);
+------------------------------------------------------------------
+Create end-point where we send a twitter username and callout to twitter and gets the latest 10 tweets
+
+var express = require('express');
+var url = require('url');
+
+app.get('/tweets/:username', fucntion(req, response){
+	var username = req.params.username;  //gets :username
+
+	options = {
+		protocol : "http",
+		host : 'api.twitter.com',
+		pathname : '/1/statuses/user_timeline.json',
+		query : {screen_name: username, count: 10}
+	}
+
+	var twitterUrl = url.format(options);
+	request.(twitterUrl).pipe(response);
+
+
+In order to make json readable, "npm install prettyjson -g", and test as:
+curl -s http://localhost:8080/<user_name> | prettyjson
+
+------------------------------------------------------------------
+
+
+
+
+
+------------------------------------------------------------------
+
+
+
+
+
+
+------------------------------------------------------------------

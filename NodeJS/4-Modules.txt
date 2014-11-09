@@ -1,1 +1,129 @@
 Exporting, npm installing, dependencies, and semantic versioning
+
+------------------------------------------------------------------
+Costum modules
+
+var highfive = function() {
+  console.log("smack!!");
+};
+module.exports = highfive;
+
+// OR //
+
+
+-- custom_goodbye.js --
+exports.goodbye = function(){
+	consolge.log("Goodbye");
+}
+
+
+-- app.js --
+var gb = require("./custom_goodbye");
+gb.goodbye();
+
+
+------------------------------------------------------------------
+-- Making HTTP Requests --
+
+var http = require(http);
+var message = "Right here!";
+var options = {
+	host : 'localhost',
+	port : 8080,
+	path : '/',
+	method : 'POST'
+}
+
+var request = http.request(options, function(response){
+	reponse.on('data', fucntion(data){
+		console.log(data);
+	});
+});
+
+request.write(message);
+request.end();
+
+
+-- Lets encapsulate it --
+
+var http = require(http);
+var makeRequest = function(message){
+	var options = {
+		host : 'localhost',
+		port : 8080,
+		path : '/',
+		method : 'POST'
+	}
+
+	var request = http.request(options, function(response){
+		reponse.on('data', fucntion(data){
+			console.log(data);
+		});
+	});
+	request.write(message);
+	request.end();
+};
+
+makeRequest("Right here!");
+
+// Export it
+
+var makeResquest = require("./make_request"); //searches in same directory. To search on node_modules directories: require("make_request");
+makeResquest("Hi there");
+makeResquest("Bye there");
+
+------------------------------------------------------------------
+
+NPM (like rubygems, for node)
+
+-- Install modules with executables globally --
+npm install coffee-script -g // global
+coffee app.coffee
+
+-- Global NPM modules cannot be required --
+npm install coffee-script
+var coffee = require("coffee-script");
+
+
+------------------------------------------------------------------
+
+-- Define Dependencies --
+
+my_app/package.json
+
+{
+	{
+		"name" : "My App",
+		"version" : "1",
+		"dependencies" : {
+			"connect" : "1.8.7"    // "1" -> Major, "8" -> Minor, "7" -> Patch
+								  //  "~1.8"   >= 1.8.0 < 1.9.0  -> API could change, but 
+								 //   "~1.8.7" >= 1.8.7 < 1.9.0  -> considered safe
+		}
+	}
+}
+
+
+------------------------------------------------------------------
+------------------------------------------------------------------
+------------------------------------------------------------------
+
+-- Exercicios -- 
+
+-- my_request.js --
+var http = require('http');
+
+var myRequest = function(message) {
+  var request = http.request('http://codeschool.com', function(response) {
+    response.pipe(process.stdout, { end: false });
+  });
+
+  request.write(message);
+  request.end();
+};
+
+module.exports = myRequest;
+
+-- app.js --
+var myRequest = require("./my_request");
+myRequest('Hello, this is dog.');
