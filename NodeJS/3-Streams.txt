@@ -1,1 +1,65 @@
-Reading, writing, piping, solving backpressure
+Reading, writing, piping, solving backpressure.
+-------------------------------------------------------------
+
+Reading, Piping and tracking progress
+
+var fs = require('fs');
+http.createServer(function(request, response){
+  var newFile = fs.createWriteStream("readme_copy.md");
+  var fileBytes = request.headers['content-length'];
+  var uploadedBytes = 0;
+
+  request.on('readable', function(){    // we use readable to keep track of progress
+    var chunk = null;
+    while(null !== (chunk = request.read())){  //+- what piping implementation is
+    	uploadedBytes += chunk.length;
+    	var progress = (uploadedBytes/fileBytes)*100;
+    	response.write("progress: " + parseInt(progress, 10) + "%\n");
+    }
+
+  });
+
+  request.pipe(newfile); //actually copies the file
+
+}).listen(8080);
+
+To test:
+node app.js
+curl --upload-file large_file.jpg http://localhost:8080
+
+
+
+-----------------------------------------------------------
+Exercise:
+
+var fs = require('fs');
+var file = fs.createReadStream('fruits.txt');
+
+file.on('readable', function(){
+  var chunk;
+  while(null !== (chunk = file.read())){
+    console.log(chunk.toString());
+  }
+});
+
+
+### OR ###
+
+var fs = require('fs');
+var file = fs.createReadStream('fruits.txt');
+file.pipe(process.stdout);
+
+----------
+
+Finish on copying files:
+
+var fs = require('fs');
+
+var file = fs.createReadStream('origin.txt');
+var destFile = fs.createWriteStream('destination.txt');
+
+file.pipe(destFile, {end:false});
+
+file.on('end', function(){
+  destFile.end('Finished!');
+});
