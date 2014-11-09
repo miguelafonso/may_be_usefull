@@ -1,0 +1,53 @@
+<h2 ng-include="'product-description.html'"></h2>
+
+Note for those double and single quotes.
+
+However, to include template, use Custom Directives.
+Types of Directives:
+  ->Template-Expanding
+     -define a custom tag that is expanded
+     -include controller logic
+  ->Complex UI
+     -calling events/event handlers
+     -reusing components
+
+HTML
+<product-description></product-description>
+
+JS
+
+app.directive("productDescription", function(){ //attention to the '-' which is interpreted by the JS as camel case
+  return {
+    restrict: 'E',  //for 'Element'
+    templateUrl: 'product-description.html'
+  };
+});
+
+-----
+restrict: ('A' - matches attribute name, E' - matches element name, 'C' - matches class name)- more@ https://docs.angularjs.org/guide/directive
+
+HTML
+e.g.: 'A'
+HTML
+<h2 product-description></h2>
+
+JS
+
+app.directive("productDescription", function(){ //attention to the '-' which is interpreted by the JS as camel case
+  return {
+    restrict: 'E',  //for 'Element'
+    templateUrl: 'product-description.html'
+  };
+});
+
+-- Moving controller into directive
+app.directive("productDescription", function(){ //attention to the '-' which is interpreted by the JS as camel case
+  return {
+    restrict: 'E',  //for 'Element'
+    templateUrl: 'product-description.html',
+    controller:function{
+      (...)
+    },
+    controllerAs:"panels"
+  };
+});

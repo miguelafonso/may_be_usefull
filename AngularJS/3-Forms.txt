@@ -1,0 +1,40 @@
+-- Forms --
+Set the forms alias controller with:
+  ng-controller="ReviewController as reviewCtrl"
+  
+To add submit functionality use:
+  ng-submit="reviewCtrl.addReview(product)" //addReview being a function expression inside ReviewController
+
+To access object data use:
+  {{reviewCtrl.review.stars}} //notice the name of the alias
+  The alias is also used where specifying the data for 2 way binding is necessary , e.g.:
+    ng-model="reviewCtrl.review.rating"
+
+#########################
+ check files for example
+#########################
+
+-- Form Validation --
+
+Start by turning off the default HTML validator:
+  <form name="reviewForm"(...) novalidate>
+
+Require fields by using <require>:
+  <input ng-model="reviewCtrl.review.author" type="email" class="form-control" placeholder="test@example.org" title="Email" required/>
+
+Next, prevent form submission if not all required fields are met with:
+  <form name="reviewForm" ng-controller="ReviewController as reviewCtrl" ng-submit="reviewForm.$valid && reviewCtrl.addReview(product)" novalidate>
+  //notice the name of the form used with the builtin $valid keyword
+
+In order to inform user info is invalid, apply styling:
+.ng-invalid.ng-dirty{
+  border-color: red; 
+}
+
+.ng-valid.ng-dirty{
+  border-color: green; 
+}
+
+Aplying filters to the data displayed can be used though the pipe. i.e.:
+  {{review.createdOn | date}}
+  ->more@ https://docs.angularjs.org/api/ng/filter

@@ -1,1 +1,60 @@
-An overview of Node.js, blocking vs. non-blocking code, reading files, issuing requests
+An overview of Node.js, blocking vs. non-blocking code, reading files, issuing requests.
+
+--------------------------------------
+
+Blocking Code:
+var contents = fs.readFileSync('<path>');
+console.log(contents);
+console.log("SOmething else");
+
+
+Non-Blocking Code:
+fs.readFile('<path>', function(err, contents){ //The callback is passed two arguments (err, data), where data is the contents of the file.
+  consolge.log(contents);
+});
+console.log("SOmething else");
+
+// or //
+
+var callback = function(err, contents){
+  console.log(contents);
+}
+
+fs.readFile('<path>', callback);
+
+--------------------------------------
+
+Initializing server
+
+var http = require('http');
+
+http.createServer(function(request, responde){
+  response.writeHead(200);       //header status code
+  response.write("Hello World"); // response body
+
+  setTimeout(function(){
+    response.write("Hello World is Done");
+    response.end();              // close connection
+  }, 1000);
+               
+}).listen(8080);
+console.log("Listening...");
+
+console: node hello.js
+
+---------------------------------------
+
+Writing page as response
+
+var http = require('http');
+var fs = require('fs');
+
+http.createServer(function(request, response) {
+  response.writeHead(200, { 'Content-Type': 'text/html' });
+  fs.readFile("index.html", function(error, contents){
+    response.write(contents);
+    response.end("Dog, over");
+  });
+}).listen(8080);
+
+
