@@ -41,9 +41,21 @@ In order to make json readable, "npm install prettyjson -g", and test as:
 curl -s http://localhost:8080/<user_name> | prettyjson
 
 ------------------------------------------------------------------
+Install Templates
+
+npm install --save ejs //by default, it will look for templates in the views directory. ejs = Embeded JavaScript
+
+(..same code but instead of request.(twitterUrl).pipe(response);..)
+
+request(url, function(err, req, response){
+	var tweets = JSON.parse(body);
+	response.locals = {tweets: tweets, name: username}
+	response.render('tweets.ejs'); 
+});
 
 
-
+Tweets.ejs
+<h1></h1>
 
 
 ------------------------------------------------------------------
